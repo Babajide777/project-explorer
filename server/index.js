@@ -7,14 +7,9 @@ const session = require("express-session");
 const register = require("@react-ssr/express/register");
 const flash = require("express-flash");
 const mongoose = require("mongoose");
-const MongoDBStore = require("connect-mongodb-session")(session);
 const app = express();
 const SERVER_PORT = process.env.SERVER_PORT;
-
-const store = new MongoDBStore({
-  uri: process.env.MONGODB_URI,
-  collection: "mySessions",
-});
+const MongoStore = require("connect-mongo");
 
 (async () => {
   await register(app);
@@ -28,7 +23,7 @@ const store = new MongoDBStore({
     next();
   });
 
-  app.use(morgan("combined"));
+  app.use(morgan("dev"));
   app.use(bodyParser.json());
   app.use(
     bodyParser.urlencoded({
@@ -42,7 +37,10 @@ const store = new MongoDBStore({
       cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 7,
       },
-      store,
+      store: MongoStore.create({
+        mongoUrl: process.env.MONGODB_URI,
+        collectionName: "mySessions",
+      }),
       resave: true,
       saveUninitialized: false,
     })
