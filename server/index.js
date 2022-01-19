@@ -1,74 +1,67 @@
 require("dotenv").config();
-
 const express = require("express");
 const morgan = require("morgan");
 const session = require("express-session");
-const register = require("@react-ssr/express/register");
 const flash = require("express-flash");
 const mongoose = require("mongoose");
 const app = express();
 const SERVER_PORT = process.env.SERVER_PORT;
 const MongoStore = require("connect-mongo");
 
-(async () => {
-  await register(app);
-
-  app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header(
-      "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept"
-    );
-    next();
-  });
-
-  app.use(morgan("dev"));
-  app.use(express.json());
-  app.use(express.urlencoded({ extended: false }));
-
-  app.use(
-    session({
-      secret: "secret",
-      cookie: {
-        maxAge: 1000 * 60 * 60 * 24 * 7,
-      },
-      store: MongoStore.create({
-        mongoUrl: process.env.MONGODB_URI,
-        collectionName: "mySessions",
-      }),
-      resave: true,
-      saveUninitialized: false,
-    })
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
   );
+  next();
+});
 
-  app.use("/api", require("./routes/api"));
-  app.use(flash());
-  app.use("/", require("./controllers/home"));
-  app.use("/", require("./controllers/user"));
-  app.use("/", require("./controllers/auth"));
+app.use(morgan("dev"));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
-  app.use("/", require("./controllers/project"));
-  app.use(express.static("public"));
+app.use(
+  session({
+    secret: "secret",
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24 * 7,
+    },
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGODB_URI,
+      collectionName: "mySessions",
+    }),
+    resave: true,
+    saveUninitialized: false,
+  })
+);
 
-  mongoose.set("bufferCommands", false);
-  mongoose.set("useFindAndModify", false);
+app.use("/api", require("./routes/api"));
+app.use(flash());
+app.use("/", require("./controllers/home"));
+app.use("/", require("./controllers/user"));
+app.use("/", require("./controllers/auth"));
 
-  mongoose.connect(
-    process.env.MONGODB_URI,
-    { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true },
-    (err) => {
-      if (err) {
-        console.log("Error connecting to db: ", err);
-      } else {
-        console.log(`Connected to MongoDB database`);
-      }
+app.use("/", require("./controllers/project"));
+app.use(express.static("public"));
+
+mongoose.set("bufferCommands", false);
+mongoose.set("useFindAndModify", false);
+
+mongoose.connect(
+  process.env.MONGODB_URI,
+  { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true },
+  (err) => {
+    if (err) {
+      console.log("Error connecting to db: ", err);
+    } else {
+      console.log(`Connected to MongoDB database`);
     }
-  );
+  }
+);
 
-  app.listen(process.env.PORT || SERVER_PORT, () =>
-    console.log("Server listening on port ")
-  );
-  // move all app code here
-})();
+app.listen(process.env.PORT || SERVER_PORT, () =>
+  console.log("Server listening on port ")
+);
 
 module.exports = app;
