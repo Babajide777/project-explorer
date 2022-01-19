@@ -5,8 +5,8 @@
 	"keywords": [],
 	"author": "",
 	"scripts": {
-		"dev": "nodemon server/index.js",
-		"start": "node --max-old-space-size=4096 server/index.js",
+		"dev": "nodemon server.js",
+		"start": "node server.js",
 		"test": "jest"
 	},
 	"license": "ISC",

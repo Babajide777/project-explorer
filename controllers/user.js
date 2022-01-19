@@ -4,7 +4,7 @@ const user = require("../services/user");
 const { createMail } = require("../services/sendMail");
 const methodOverride = require("method-override");
 const multer = require("multer");
-const { storage } = require("../../cloudinary/cloudinary");
+const { storage } = require("../services/cloudinary");
 const upload = multer({ storage });
 
 const router = express.Router();
