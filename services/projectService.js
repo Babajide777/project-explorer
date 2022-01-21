@@ -1,4 +1,4 @@
-const Project = require("../models/project");
+const Project = require("../models/projectModel");
 const { translateError } = require("../models/mongo_helper");
 
 const create = async ({ name, abstract, authors, tags, createdBy }) => {
@@ -23,8 +23,14 @@ const getAll = async () => {
   return await Project.find();
 };
 
+// get latest four projects.
+const getLastFourProjects = async () => {
+  return await Project.find().sort({ createdAt: -1 }).limit(4);
+};
+
 module.exports = {
   getAll,
   create,
   getById,
+  getLastFourProjects,
 };

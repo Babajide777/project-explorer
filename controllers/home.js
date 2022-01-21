@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const path = require("path");
 
-const project = require("../services/project");
+const project = require("../services/projectService");
 
 router.get("/", async (req, res) => {
   const projects = await project.getAll();

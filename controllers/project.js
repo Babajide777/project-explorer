@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { create, getById } = require("../services/project");
+const { create, getById } = require("../services/projectService");
 const user = require("../services/user");
 
 router.get("/projects/submit", (req, res) => {
