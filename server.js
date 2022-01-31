@@ -39,6 +39,7 @@ app.use(
 app.use("/api", require("./routes/api"));
 app.use(flash());
 app.use("/home", require("./routes/homeRoute"));
+app.use("/user", require("./routes/userRoute"));
 app.use("/", require("./controllers/user"));
 app.use("/", require("./controllers/auth"));
 

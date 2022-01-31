@@ -12,21 +12,15 @@ const create = async ({ name, abstract, authors, tags, createdBy }) => {
   }
 };
 
-/* Return project with specified id */
-const getById = async (id) => {
-  // populate projects with data from file.
-  return await Project.findById(id);
-};
-/* Return all projects */
-const getAll = async () => {
-  // populate projects with data from file.
-  return await Project.find();
-};
+// Return project with specified id
+const getById = async (id) => await Project.findById(id);
 
-// get latest four projects.
-const getLastFourProjects = async () => {
-  return await Project.find().sort({ createdAt: -1 }).limit(4);
-};
+// Return all projects
+const getAll = async () => await Project.find();
+
+// get four most recent projects.
+const getLastFourProjects = async () =>
+  await Project.find().sort({ createdAt: -1 }).limit(4);
 
 module.exports = {
   getAll,
