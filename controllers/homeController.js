@@ -11,6 +11,25 @@ const getFourRecentProject = async (req, res) => {
   );
 };
 
+const getPrograms = (req, res) =>
+  responseHandler(res, "All projects", 200, true, [
+    "Computer Science",
+    "Computer Information Systems",
+    "Computer technology",
+  ]);
+
+const getGraduationYears = (req, res) =>
+  responseHandler(res, "All graduation years", 200, true, [
+    "2015",
+    "2016",
+    "2017",
+    "2018",
+    "2019",
+    "2020",
+  ]);
+
 module.exports = {
   getFourRecentProject,
+  getPrograms,
+  getGraduationYears,
 };
