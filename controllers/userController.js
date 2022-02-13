@@ -23,9 +23,11 @@ const userLogin = async (req, res) => {
 };
 
 const userSignup = async (req, res) => {
-  console.log(req.body);
   const { details } = await userRegisterValidation(req.body);
-  console.log(details);
+  if (details) {
+    let allErrors = details.map((detail) => detail.message.replace(/"/g, ""));
+    return responseHandler(res, allErrors, 400, false, "");
+  }
 };
 
 module.exports = { userLogin, userSignup };
