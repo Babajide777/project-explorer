@@ -6,6 +6,6 @@ const {
 } = require("../controllers/homeController");
 
 router.get("/", getFourRecentProject);
-router.get("/progams", getPrograms);
+router.get("/programs", getPrograms);
 router.get("/graduationyears", getGraduationYears);
 module.exports = router;

@@ -26,6 +26,8 @@ const getGraduationYears = (req, res) =>
     "2018",
     "2019",
     "2020",
+    "2021",
+    "2022",
   ]);
 
 module.exports = {
