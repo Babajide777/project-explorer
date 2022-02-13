@@ -15,8 +15,8 @@ const userRegisterValidation = async (field) => {
       )
       .required(),
     matricNumber: Joi.string().alphanum().required(),
-    graduationYear: Joi.string()
-      .valid("2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022")
+    graduationYear: Joi.number()
+      .valid(2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022)
       .required(),
   });
 

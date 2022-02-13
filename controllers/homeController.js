@@ -19,16 +19,13 @@ const getPrograms = (req, res) =>
   ]);
 
 const getGraduationYears = (req, res) =>
-  responseHandler(res, "All graduation years", 200, true, [
-    "2015",
-    "2016",
-    "2017",
-    "2018",
-    "2019",
-    "2020",
-    "2021",
-    "2022",
-  ]);
+  responseHandler(
+    res,
+    "All graduation years",
+    200,
+    true,
+    [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022]
+  );
 
 module.exports = {
   getFourRecentProject,
