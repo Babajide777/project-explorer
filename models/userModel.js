@@ -10,7 +10,7 @@ const userSchema = new Schema(
     password: { type: String, required: true },
     program: String,
     matricNumber: { type: String, required: true },
-    graduationYear: String,
+    graduationYear: Number,
     // salt: { type: String, required: true },
     // profilePicture: {
     //   type: String,
