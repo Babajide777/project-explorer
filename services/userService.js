@@ -29,7 +29,7 @@ const createUser = async ({
       graduationYear,
     });
     if (await newUser.save()) {
-      return [true, signJwt(newUser), newUser];
+      return [true, signJwt(newUser._id), newUser];
     }
   } catch (err) {
     return [false, translateError(err)];
@@ -50,6 +50,16 @@ const authenticateUser = async (email, password) => {
 
 // Return user with specified email
 const getByEmail = async (email) => await User.findOne({ email });
+
+// create and sign json web token for a user
+const signJwt = (id) => {
+  const token = jwt.sign({ id }, TOKEN_SECRET, {
+    expiresIn: 60 * 60 * 24 * 30,
+  });
+  const data = {};
+  data.token = token;
+  return { token: data.token };
+};
 
 // if (user) {
 //     user.profilePicture = scaledPicture(user.profilePicture);
