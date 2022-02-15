@@ -1,6 +1,8 @@
 const User = require("../models/userModel");
 const bcrypt = require("bcryptjs");
 const { translateError } = require("./mongo_helper");
+const TOKEN_SECRET = process.env.TOKEN_SECRET;
+const jwt = require("jsonwebtoken");
 
 //To hash pasword
 const hashedPassword = async (password) => {
