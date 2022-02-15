@@ -38,6 +38,9 @@ const userSignup = async (req, res) => {
     return responseHandler(res, "Username not available", 400, false, "");
   }
   const check = await createUser(req.body);
+  return check[0]
+    ? responseHandler(res, "User registered successfully", 201, true, check[1])
+    : responseHandler(res, "Unable to register User", 400, false, check[1]);
 };
 
 module.exports = { userLogin, userSignup };
