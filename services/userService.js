@@ -1,5 +1,6 @@
 const User = require("../models/userModel");
 const bcrypt = require("bcryptjs");
+const { translateError } = require("./mongo_helper");
 
 //To hash pasword
 const hashedPassword = async (password) => {
