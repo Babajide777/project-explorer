@@ -16,6 +16,16 @@ const userLogin = async (req, res) => {
     return responseHandler(res, allErrors, 400, false, "");
   }
 
+  const anyUsername = await getByEmail(req.body.email);
+  if (!anyUsername) {
+    return responseHandler(
+      res,
+      "Email or Password is incorrect",
+      400,
+      false,
+      ""
+    );
+  }
   const check = await authenticateUser(email, password);
   return check[0]
     ? responseHandler(

@@ -63,6 +63,10 @@ const signJwt = (id) => {
   return { token: data.token };
 };
 
+//To validate user password
+const validatePassword = async (formPassword, dbPassword) =>
+  await bcrypt.compare(formPassword, dbPassword);
+
 // if (user) {
 //     user.profilePicture = scaledPicture(user.profilePicture);
 //   }
@@ -75,4 +79,5 @@ module.exports = {
   authenticateUser,
   createUser,
   getByEmail,
+  validatePassword,
 };
