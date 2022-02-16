@@ -1,5 +1,5 @@
 const User = require("../models/userModel");
-const { translateError } = require("../models/mongo_helper");
+const { translateError } = require("./mongo_helper");
 
 const create = async ({
   firstname,
