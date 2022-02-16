@@ -3,11 +3,19 @@ const {
   createUser,
   getByEmail,
 } = require("../services/userService");
-const { userRegisterValidation } = require("../services/validation");
+const {
+  userRegisterValidation,
+  userLoginValidation,
+} = require("../services/validation");
 const { responseHandler } = require("../utils/responseHandler");
 
 const userLogin = async (req, res) => {
-  const { email, password } = req.body;
+  const { details } = await userLoginValidation(req.body);
+  if (details) {
+    let allErrors = details.map((detail) => detail.message.replace(/"/g, ""));
+    return responseHandler(res, allErrors, 400, false, "");
+  }
+
   const check = await authenticateUser(email, password);
   return check[0]
     ? responseHandler(

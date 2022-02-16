@@ -28,18 +28,18 @@ const userRegisterValidation = async (field) => {
 };
 
 //User login validation rules
-// const userLoginValidation = async (field) => {
-//   const schema = Joi.object({
-//     usernameOrEmail: Joi.string().min(5).required(),
-//     password: Joi.string().required().min(8).max(1024),
-//   });
+const userLoginValidation = async (field) => {
+  const schema = Joi.object({
+    email: Joi.email().required(),
+    password: Joi.string().required().min(8).max(1024),
+  });
 
-//   try {
-//     return await schema.validateAsync(field, { abortEarly: false });
-//   } catch (err) {
-//     return err;
-//   }
-// };
+  try {
+    return await schema.validateAsync(field, { abortEarly: false });
+  } catch (err) {
+    return err;
+  }
+};
 
 //User forgot password validation rules
 // const userforgotPasswordValidation = async (field) => {
@@ -69,7 +69,7 @@ const userRegisterValidation = async (field) => {
 
 module.exports = {
   userRegisterValidation,
-  // userLoginValidation,
+  userLoginValidation,
   // userforgotPasswordValidation,
   // userResetPasswordValidation,
 };
