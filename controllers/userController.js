@@ -1,7 +1,8 @@
 const {
-  authenticateUser,
   createUser,
   getByEmail,
+  validatePassword,
+  signJwt,
 } = require("../services/userService");
 const {
   userRegisterValidation,
@@ -15,33 +16,25 @@ const userLogin = async (req, res) => {
     let allErrors = details.map((detail) => detail.message.replace(/"/g, ""));
     return responseHandler(res, allErrors, 400, false, "");
   }
-
   const anyUsername = await getByEmail(req.body.email);
   if (!anyUsername) {
     return responseHandler(
       res,
-      "Email or Password is incorrect",
+      ["Email or Password is incorrect"],
       400,
       false,
       ""
     );
   }
-  const check = await authenticateUser(email, password);
-  return check[0]
+  return (await validatePassword(req.body.password, anyUsername.password))
     ? responseHandler(
         res,
-        "User authentication succesful",
+        ["Login Successful"],
         200,
-        check[0],
-        check[1]
+        true,
+        signJwt(anyUsername._id)
       )
-    : responseHandler(
-        res,
-        "User authentication not succesful",
-        401,
-        check[0],
-        check[1]
-      );
+    : responseHandler(res, ["Email or Password is incorrect"], 400, false, "");
 };
 
 const userSignup = async (req, res) => {

@@ -38,18 +38,6 @@ const createUser = async ({
   }
 };
 
-// Authenticate a user
-const authenticateUser = async (email, password) => {
-  const user = new User();
-  user.email = email;
-  user.password = password;
-  const result = await getByEmail(email);
-
-  return result && user.validPassword(result, user.password)
-    ? [true, result]
-    : [false, ["Invalid email/password"]];
-};
-
 // Return user with specified email
 const getByEmail = async (email) => await User.findOne({ email });
 
@@ -76,8 +64,8 @@ const validatePassword = async (formPassword, dbPassword) =>
 // };
 
 module.exports = {
-  authenticateUser,
   createUser,
   getByEmail,
   validatePassword,
+  signJwt,
 };
