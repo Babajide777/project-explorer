@@ -30,7 +30,7 @@ const userRegisterValidation = async (field) => {
 //User login validation rules
 const userLoginValidation = async (field) => {
   const schema = Joi.object({
-    email: Joi.email().required(),
+    email: Joi.string().email(),
     password: Joi.string().required().min(8).max(1024),
   });
 

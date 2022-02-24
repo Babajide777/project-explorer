@@ -55,6 +55,15 @@ const signJwt = (id) => {
 const validatePassword = async (formPassword, dbPassword) =>
   await bcrypt.compare(formPassword, dbPassword);
 
+//To verify user's Jwt
+const checkJwt = async (jwtID) => {
+  try {
+    return await jwt.verify(jwtID, TOKEN_SECRET);
+  } catch (error) {
+    return { err: error.message };
+  }
+};
+
 // if (user) {
 //     user.profilePicture = scaledPicture(user.profilePicture);
 //   }
@@ -68,4 +77,5 @@ module.exports = {
   getByEmail,
   validatePassword,
   signJwt,
+  checkJwt,
 };
