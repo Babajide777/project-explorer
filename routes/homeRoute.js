@@ -7,7 +7,9 @@ const {
 const { verifyToken } = require("../middlewares/authMiddleware");
 
 router.get("/", getFourRecentProject);
-router.post("/", verifyToken, getFourRecentProject);
+router.post("/", verifyToken, (req, res) => {
+  console.log("here");
+});
 router.get("/programs", getPrograms);
 router.get("/graduationyears", getGraduationYears);
 module.exports = router;
