@@ -3,7 +3,6 @@ const {
   getByEmail,
   validatePassword,
   signJwt,
-  checkJwt,
 } = require("../services/userService");
 const {
   userRegisterValidation,
@@ -61,10 +60,22 @@ const userSignup = async (req, res) => {
     : responseHandler(res, ["Unable to register User"], 400, false, check[1]);
 };
 
-const userJwt = async (req, res) => {
-  const { token } = req.body;
-  const check = await checkJwt(token);
-  console.log(check);
+const userForgotPassword = async (req, res) => {
+  const { email } = req.body;
+  const check = await getByEmail(email);
+
+  if (check) {
+    // createMail(email, check._id);
+    // res.redirect("/login");
+    console.log("here");
+  }
+  return responseHandler(
+    res,
+    ["Email does not belong to a registered user"],
+    404,
+    false,
+    ""
+  );
 };
 
-module.exports = { userLogin, userSignup, userJwt };
+module.exports = { userLogin, userSignup, userForgotPassword };
