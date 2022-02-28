@@ -64,6 +64,8 @@ const checkJwt = async (jwtID) => {
   }
 };
 
+const getUserByID = async (id) => await User.findById(id);
+
 // if (user) {
 //     user.profilePicture = scaledPicture(user.profilePicture);
 //   }
@@ -78,4 +80,5 @@ module.exports = {
   validatePassword,
   signJwt,
   checkJwt,
+  getUserByID,
 };

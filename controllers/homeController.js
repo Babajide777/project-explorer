@@ -1,4 +1,5 @@
 const { getLastFourProjects } = require("../services/projectService");
+const { getUserByID } = require("../services/userService");
 const { responseHandler } = require("../utils/responseHandler");
 
 const getFourRecentProject = async (req, res) => {
@@ -27,8 +28,14 @@ const getGraduationYears = (req, res) =>
     [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022]
   );
 
+const headerFunc = async (req, res) => {
+  const user = await getUserByID(req.id);
+  return responseHandler(res, "Session okay", 200, true, user);
+};
+
 module.exports = {
   getFourRecentProject,
   getPrograms,
   getGraduationYears,
+  headerFunc,
 };

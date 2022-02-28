@@ -13,7 +13,9 @@ const verifyToken = async (req, res, next) => {
     }
 
     if (id && exp < Date.now()) {
+      req.id = id;
       next();
+      return;
     } else {
       return responseHandler(res, ["Expired token"], 403, false, "");
     }
