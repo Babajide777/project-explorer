@@ -7,6 +7,7 @@ const {
 const {
   userRegisterValidation,
   userLoginValidation,
+  userforgotPasswordValidation,
 } = require("../services/validation");
 const { responseHandler } = require("../utils/responseHandler");
 
@@ -61,6 +62,11 @@ const userSignup = async (req, res) => {
 };
 
 const userForgotPassword = async (req, res) => {
+  const { details } = await userforgotPasswordValidation(req.body);
+  if (details) {
+    let allErrors = details.map((detail) => detail.message.replace(/"/g, ""));
+    return responseHandler(res, allErrors, 400, false, "");
+  }
   const { email } = req.body;
   const check = await getByEmail(email);
 

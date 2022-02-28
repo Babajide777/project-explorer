@@ -41,17 +41,17 @@ const userLoginValidation = async (field) => {
   }
 };
 
-//User forgot password validation rules
-// const userforgotPasswordValidation = async (field) => {
-//   const schema = Joi.object({
-//     username: Joi.string().alphanum().min(5).max(30).required(),
-//   });
-//   try {
-//     return await schema.validateAsync(field, { abortEarly: false });
-//   } catch (err) {
-//     return err;
-//   }
-// };
+// User forgot password validation rules
+const userforgotPasswordValidation = async (field) => {
+  const schema = Joi.object({
+    email: Joi.string().email(),
+  });
+  try {
+    return await schema.validateAsync(field, { abortEarly: false });
+  } catch (err) {
+    return err;
+  }
+};
 
 //User reset password validation rules
 // const userResetPasswordValidation = async (field) => {
@@ -70,6 +70,6 @@ const userLoginValidation = async (field) => {
 module.exports = {
   userRegisterValidation,
   userLoginValidation,
-  // userforgotPasswordValidation,
+  userforgotPasswordValidation,
   // userResetPasswordValidation,
 };
