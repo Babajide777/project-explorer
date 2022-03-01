@@ -83,7 +83,7 @@ const updateProfile = async (field) => {
 const getUrl = () => {
   return process.env.NODE_ENV === "production"
     ? "https://jide-explorer.herokuapp.com/"
-    : "http://localhost:4000/";
+    : "http://localhost:3000/";
 };
 
 // Function to scale picture
