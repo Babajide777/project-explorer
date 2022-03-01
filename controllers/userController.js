@@ -3,11 +3,13 @@ const {
   getByEmail,
   validatePassword,
   signJwt,
+  getUserByID,
 } = require("../services/userService");
 const {
   userRegisterValidation,
   userLoginValidation,
   userforgotPasswordValidation,
+  userResetPasswordValidation,
 } = require("../services/validation");
 const { responseHandler } = require("../utils/responseHandler");
 const { createMail } = require("../services/sendMail");
@@ -84,7 +86,19 @@ const userForgotPassword = async (req, res) => {
   );
 };
 
-const userResetPassword = async (req, res) => {};
+const userResetPassword = async (req, res) => {
+  const { details } = await userResetPasswordValidation(req.body);
+  if (details) {
+    let allErrors = details.map((detail) => detail.message.replace(/"/g, ""));
+    return responseHandler(res, allErrors, 400, false, "");
+  }
+  const { password, confirmPassword, id } = req.body;
+
+  if (password !== confirmPassword) {
+    return responseHandler(res, ["passwords do not match"], 400, false, "");
+  }
+  const check = await getUserByID(id);
+};
 
 module.exports = {
   userLogin,
