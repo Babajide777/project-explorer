@@ -84,4 +84,11 @@ const userForgotPassword = async (req, res) => {
   );
 };
 
-module.exports = { userLogin, userSignup, userForgotPassword };
+const userResetPassword = async (req, res) => {};
+
+module.exports = {
+  userLogin,
+  userSignup,
+  userForgotPassword,
+  userResetPassword,
+};
