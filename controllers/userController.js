@@ -4,6 +4,8 @@ const {
   validatePassword,
   signJwt,
   getUserByID,
+  hashedPassword,
+  getUserByIDandUpdatePassword,
 } = require("../services/userService");
 const {
   userRegisterValidation,
@@ -98,6 +100,20 @@ const userResetPassword = async (req, res) => {
     return responseHandler(res, ["passwords do not match"], 400, false, "");
   }
   const check = await getUserByID(id);
+  if (check) {
+    const newPassword = await hashedPassword(password);
+    if (getUserByIDandUpdatePassword(id, newPassword)) {
+      return responseHandler(
+        res,
+        ["password sucesssfully changed"],
+        200,
+        true,
+        ""
+      );
+    }
+    return responseHandler(res, ["Error reseting password"], 400, false, "");
+  }
+  return responseHandler(res, ["incorrect id"], 400, false, "");
 };
 
 module.exports = {
