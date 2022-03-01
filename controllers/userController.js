@@ -10,6 +10,7 @@ const {
   userforgotPasswordValidation,
 } = require("../services/validation");
 const { responseHandler } = require("../utils/responseHandler");
+const { createMail } = require("../services/sendMail");
 
 const userLogin = async (req, res) => {
   const { details } = await userLoginValidation(req.body);
@@ -71,9 +72,8 @@ const userForgotPassword = async (req, res) => {
   const check = await getByEmail(email);
 
   if (check) {
-    // createMail(email, check._id);
-    // res.redirect("/login");
-    console.log("here");
+    createMail(email, check._id);
+    return responseHandler(res, ["Email sent to user"], 200, true, "");
   }
   return responseHandler(
     res,

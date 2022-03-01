@@ -79,12 +79,11 @@ const updateProfile = async (field) => {
   });
 };
 
-// Get current URL
+// To get current url
 const getUrl = () => {
-  if (process.env.NODE_ENV === "dev") {
-    return "http://localhost:4000/";
-  }
-  return "https://jide-explorer.herokuapp.com/";
+  return process.env.NODE_ENV === "production"
+    ? "https://jide-explorer.herokuapp.com/"
+    : "http://localhost:4000/";
 };
 
 // Function to scale picture
