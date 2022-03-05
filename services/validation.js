@@ -67,9 +67,25 @@ const userResetPasswordValidation = async (field) => {
   }
 };
 
+// create project validation rules
+const createProjectValidation = async (field) => {
+  const schema = Joi.object({
+    name: Joi.string().required(),
+    abstract: Joi.string().required(),
+    authors: Joi.array().min(0).items(Joi.string()).required(),
+    tags: Joi.array().min(0).items(Joi.string()).required(),
+    createdBy: Joi.string().alphanum(),
+  });
+  try {
+    return await schema.validateAsync(field, { abortEarly: false });
+  } catch (err) {
+    return err;
+  }
+};
 module.exports = {
   userRegisterValidation,
   userLoginValidation,
   userforgotPasswordValidation,
   userResetPasswordValidation,
+  createProjectValidation,
 };
