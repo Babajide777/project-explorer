@@ -116,9 +116,18 @@ const userResetPassword = async (req, res) => {
   return responseHandler(res, ["incorrect id"], 400, false, "");
 };
 
+const userProfileDetails = async (req, res) => {
+  const { id } = req.params;
+  const user = await getUserByID(id);
+  return user
+    ? responseHandler(res, "User found", 200, true, user)
+    : responseHandler(res, "User not found", 404, false, "");
+};
+
 module.exports = {
   userLogin,
   userSignup,
   userForgotPassword,
   userResetPassword,
+  userProfileDetails,
 };

@@ -1,7 +1,13 @@
 const Project = require("../models/projectModel");
 const { translateError } = require("./mongo_helper");
 
-const create = async ({ name, abstract, authors, tags, createdBy }) => {
+const createNewProject = async ({
+  name,
+  abstract,
+  authors,
+  tags,
+  createdBy,
+}) => {
   try {
     const project = new Project({ name, abstract, authors, tags, createdBy });
     if (await project.save()) {
@@ -24,7 +30,7 @@ const getLastFourProjects = async () =>
 
 module.exports = {
   getAll,
-  create,
+  createNewProject,
   getById,
   getLastFourProjects,
 };
