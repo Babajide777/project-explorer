@@ -82,10 +82,27 @@ const createProjectValidation = async (field) => {
     return err;
   }
 };
+
+// User profile change password validation rules
+const profileChangePasswordValidation = async (field) => {
+  const schema = Joi.object({
+    currentPassword: Joi.string().required().min(8).max(1024),
+    newPassword: Joi.string().required().min(8).max(1024),
+    confirmPassword: Joi.string().required().min(8).max(1024),
+    id: Joi.string().required(),
+  });
+  try {
+    return await schema.validateAsync(field, { abortEarly: false });
+  } catch (err) {
+    return err;
+  }
+};
+
 module.exports = {
   userRegisterValidation,
   userLoginValidation,
   userforgotPasswordValidation,
   userResetPasswordValidation,
   createProjectValidation,
+  profileChangePasswordValidation,
 };
