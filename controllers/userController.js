@@ -12,6 +12,7 @@ const {
   userLoginValidation,
   userforgotPasswordValidation,
   userResetPasswordValidation,
+  profileChangePasswordValidation,
 } = require("../services/validation");
 const { responseHandler } = require("../utils/responseHandler");
 const { createMail } = require("../services/sendMail");
@@ -124,10 +125,52 @@ const userProfileDetails = async (req, res) => {
     : responseHandler(res, "User not found", 404, false, "");
 };
 
+const userProfileChangePwd = async (req, res) => {
+  const { details } = await profileChangePasswordValidation(req.body);
+  if (details) {
+    let allErrors = details.map((detail) => detail.message.replace(/"/g, ""));
+    return responseHandler(res, allErrors, 400, false, "");
+  }
+  const { currentPassword, newPassword, confirmPassword, id } = req.body;
+
+  if (newPassword !== confirmPassword) {
+    return responseHandler(res, ["passwords do not match"], 400, false, "");
+  }
+  const user = await getUserByID(id);
+  if (!user) {
+    return responseHandler(res, ["id doesn't exist"], 404, false, "");
+  }
+
+  const check = await validatePassword(currentPassword, user.password);
+
+  if (!check) {
+    return responseHandler(
+      res,
+      ["Your current password is incorrect"],
+      400,
+      false,
+      ""
+    );
+  }
+
+  const changedPassword = await hashedPassword(newPassword);
+  if (getUserByIDandUpdatePassword(id, changedPassword)) {
+    return responseHandler(
+      res,
+      ["password sucesssfully changed"],
+      200,
+      true,
+      ""
+    );
+  }
+  return responseHandler(res, ["Error reseting password"], 400, false, "");
+};
+
 module.exports = {
   userLogin,
   userSignup,
   userForgotPassword,
   userResetPassword,
   userProfileDetails,
+  userProfileChangePwd,
 };
