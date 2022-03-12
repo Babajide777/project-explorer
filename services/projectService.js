@@ -19,7 +19,7 @@ const createNewProject = async ({
 };
 
 // Return project with specified id
-const getById = async (id) => await Project.findById(id);
+const getProjectById = async (id) => await Project.findById(id);
 
 // Return all projects
 const getAll = async () => await Project.find();
@@ -31,6 +31,6 @@ const getLastFourProjects = async () =>
 module.exports = {
   getAll,
   createNewProject,
-  getById,
+  getProjectById,
   getLastFourProjects,
 };

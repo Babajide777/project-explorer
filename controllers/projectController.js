@@ -1,4 +1,7 @@
-const { createNewProject } = require("../services/projectService");
+const {
+  createNewProject,
+  getProjectById,
+} = require("../services/projectService");
 const { createProjectValidation } = require("../services/validation");
 const { responseHandler } = require("../utils/responseHandler");
 
@@ -26,6 +29,15 @@ const createProject = async (req, res) => {
       );
 };
 
+const getProject = async (req, res) => {
+  const { id } = req.body;
+  const project = await getProjectById(id);
+  return project
+    ? responseHandler(res, ["Project found"], 200, true, project)
+    : responseHandler(res, ["Project not found"], 400, false, "");
+};
+
 module.exports = {
   createProject,
+  getProject,
 };

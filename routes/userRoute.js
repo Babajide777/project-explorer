@@ -11,7 +11,7 @@ const {
 router.post("/login", userLogin);
 router.post("/signup", userSignup);
 router.post("/forgotpassword", userForgotPassword);
-router.post("/resetpassword", userResetPassword);
+router.put("/resetpassword", userResetPassword);
 router.get("/profiledetails/:id", userProfileDetails);
-router.post("/profilechangepwd", userProfileChangePwd);
+router.put("/profilechangepwd", userProfileChangePwd);
 module.exports = router;
