@@ -1,5 +1,5 @@
 const User = require("../models/userModel");
-const { getByEmail } = require("./userService");
+const { getByEmail, getUrl } = require("./userService");
 
 // const { getByEmail, getUrl } = require("../services/user");
 

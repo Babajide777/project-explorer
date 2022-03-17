@@ -69,6 +69,13 @@ const getUserByID = async (id) => await User.findById(id);
 const getUserByIDandUpdatePassword = async (id, password) =>
   await User.findByIdAndUpdate(id, { password }, { new: true });
 
+// To get current url
+const getUrl = () => {
+  return process.env.NODE_ENV === "production"
+    ? "https://jide-explorer.herokuapp.com/ "
+    : "http://localhost:4000/";
+};
+
 // if (user) {
 //     user.profilePicture = scaledPicture(user.profilePicture);
 //   }
@@ -86,4 +93,5 @@ module.exports = {
   getUserByID,
   hashedPassword,
   getUserByIDandUpdatePassword,
+  getUrl,
 };
