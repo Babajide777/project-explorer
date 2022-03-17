@@ -42,9 +42,10 @@ app.use(flash());
 app.use("/home", require("./routes/homeRoute"));
 app.use("/user", require("./routes/userRoute"));
 app.use("/project", require("./routes/projectRoute"));
+app.use("/auth", require("./routes/socialRoute"));
 
-app.use("/", require("./controllers/user"));
-app.use("/", require("./controllers/auth"));
+// app.use("/", require("./controllers/user"));
+// app.use("/", require("./controllers/auth"));
 
 app.use("/", require("./controllers/project"));
 app.use(express.static("public"));
