@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 const app = express();
 const SERVER_PORT = process.env.SERVER_PORT;
 const MongoStore = require("connect-mongo");
+const passport = require("passport");
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -21,6 +22,8 @@ app.use((req, res, next) => {
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(
   session({

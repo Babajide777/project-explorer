@@ -1,9 +1,11 @@
+const router = require("express").Router();
 const {
   facebookAuthentication,
   googleAuthentication,
 } = require("../controllers/socialController");
 
-const router = require("express").Router();
+// router.use(passport.initialize());
+// router.use(passport.session());
 
 router.get("/facebook", facebookAuthentication);
 
