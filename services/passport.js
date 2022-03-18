@@ -58,3 +58,49 @@ passport.deserializeUser(function (id, done) {
     done(err, user);
   });
 });
+
+// Google Authentication
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: GOOGLE_CLIENT_ID,
+      clientSecret: GOOGLE_CLIENT_SECRET,
+      callbackURL: `${getUrl()}auth/google/callback`,
+    },
+    function (accessToken, refreshToken, profile, done) {
+      const { sub, name, given_name, family_name, email } = profile._json;
+      getByEmail(email)
+        .then((person) => {
+          if (person) {
+            return done(null, person);
+          } else {
+            let newUser = new User();
+            newUser.firstname = given_name;
+            newUser.lastname = family_name;
+            newUser.email = email;
+            newUser.matricNumber = sub;
+            newUser.setPassword(name);
+            newUser
+              .save()
+              .then((res) => {
+                done(null, res);
+              })
+              .catch((err) => {
+                throw err;
+              });
+          }
+        })
+        .catch((err) => done(err));
+    }
+  )
+);
+
+passport.serializeUser(function (person, done) {
+  done(null, person.sub);
+});
+
+passport.deserializeUser(function (id, done) {
+  User.findById(id, function (err, user) {
+    done(err, user);
+  });
+});
