@@ -1,11 +1,8 @@
 const User = require("../models/userModel");
+const passport = require("passport");
 const { getByEmail, getUrl } = require("./userService");
-
-// const { getByEmail, getUrl } = require("../services/user");
-
 const facebookStrategy = require("passport-facebook").Strategy;
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
-
 const FACEBOOK_APP_SECRET = process.env.FACEBOOK_APP_SECRET;
 const FACEBOOK_APP_ID = process.env.FACEBOOK_APP_ID;
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;

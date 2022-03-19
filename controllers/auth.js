@@ -137,10 +137,11 @@ router.get(
   "/auth/google/callback",
   passport.authenticate("google", { failureRedirect: "/login" }),
   function (req, res) {
-    req.session.user = req.user;
-    req.user.graduationYear === undefined && req.user.program === undefined
-      ? res.redirect("/continuesignup")
-      : res.redirect("/");
+    // req.session.user = req.user;
+    // req.user.graduationYear === undefined && req.user.program === undefined
+    //   ? res.redirect("/continuesignup")
+    //   : res.redirect("/");
+    console.log(req);
   }
 );
 
