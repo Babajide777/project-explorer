@@ -26,10 +26,11 @@ const createUser = async ({
       lastName,
       email,
       password: await hashedPassword(password),
-      program,
       matricNumber,
-      graduationYear,
     });
+    if (program) newUser.program = program;
+    if (graduationYear) newUser.graduationYear = graduationYear;
+
     if (await newUser.save()) {
       return [true, signJwt(newUser._id), newUser];
     }
