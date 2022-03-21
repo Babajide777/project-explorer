@@ -6,6 +6,7 @@ const {
   getUserByID,
   hashedPassword,
   getUserByIDandUpdatePassword,
+  checkJwt,
 } = require("../services/userService");
 const {
   userRegisterValidation,
@@ -166,6 +167,25 @@ const userProfileChangePwd = async (req, res) => {
   return responseHandler(res, ["Error reseting password"], 400, false, "");
 };
 
+const userContinueSignup = async (req, res) => {
+  const bearerHeader = req.headers.authorization;
+  const token = bearerHeader.split('"')[1];
+
+  if (token !== undefined) {
+    const check = await checkJwt(token);
+    const { id, err } = check;
+    if (err) {
+      return responseHandler(res, [err], 403, false, "");
+    }
+    const gottenUser = await getUserByID(id);
+    if (gottenUser) {
+      return responseHandler(res, "User found", 200, true, gottenUser);
+    }
+    return responseHandler(res, ["User not found"], 400, false, "");
+  }
+  return responseHandler(res, ["No authorization token found"], 403, false, "");
+};
+
 module.exports = {
   userLogin,
   userSignup,
@@ -173,4 +193,5 @@ module.exports = {
   userResetPassword,
   userProfileDetails,
   userProfileChangePwd,
+  userContinueSignup,
 };
