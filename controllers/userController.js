@@ -7,6 +7,7 @@ const {
   hashedPassword,
   getUserByIDandUpdatePassword,
   checkJwt,
+  getUserByIDandUpdateField,
 } = require("../services/userService");
 const {
   userRegisterValidation,
@@ -14,6 +15,7 @@ const {
   userforgotPasswordValidation,
   userResetPasswordValidation,
   profileChangePasswordValidation,
+  updateUserContinueSignupValidation,
 } = require("../services/validation");
 const { responseHandler } = require("../utils/responseHandler");
 const { createMail } = require("../services/sendMail");
@@ -187,7 +189,22 @@ const userContinueSignup = async (req, res) => {
 };
 
 const updateUserContinueSignup = async (req, res) => {
-  console.log(req.body);
+  const { details } = await updateUserContinueSignupValidation(req.body);
+  if (details) {
+    let allErrors = details.map((detail) => detail.message.replace(/"/g, ""));
+    return responseHandler(res, allErrors, 400, false, "");
+  }
+  const { program, graduationYear, matricNumber, id } = req.body;
+  let field = {
+    program,
+    graduationYear,
+    matricNumber,
+  };
+  const check = await getUserByIDandUpdateField(id, field);
+  if (check) {
+    return responseHandler(res, ["User Signup complete"], 200, true, "");
+  }
+  return responseHandler(res, ["Unable to complete signup"], 404, false, "");
 };
 
 module.exports = {

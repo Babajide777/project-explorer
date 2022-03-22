@@ -77,6 +77,8 @@ const getUrl = () => {
     : "http://localhost:4000/";
 };
 
+const getUserByIDandUpdateField = async (id, field) =>
+  await User.findByIdAndUpdate(id, field, { new: true });
 // if (user) {
 //     user.profilePicture = scaledPicture(user.profilePicture);
 //   }
@@ -95,4 +97,5 @@ module.exports = {
   hashedPassword,
   getUserByIDandUpdatePassword,
   getUrl,
+  getUserByIDandUpdateField,
 };
