@@ -186,6 +186,10 @@ const userContinueSignup = async (req, res) => {
   return responseHandler(res, ["No authorization token found"], 403, false, "");
 };
 
+const updateUserContinueSignup = async (req, res) => {
+  console.log(req.body);
+};
+
 module.exports = {
   userLogin,
   userSignup,
@@ -194,4 +198,5 @@ module.exports = {
   userProfileDetails,
   userProfileChangePwd,
   userContinueSignup,
+  updateUserContinueSignup,
 };

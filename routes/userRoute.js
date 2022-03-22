@@ -7,6 +7,7 @@ const {
   userProfileDetails,
   userProfileChangePwd,
   userContinueSignup,
+  updateUserContinueSignup,
 } = require("../controllers/userController");
 
 router.post("/login", userLogin);
@@ -16,4 +17,5 @@ router.put("/resetpassword", userResetPassword);
 router.get("/profiledetails/:id", userProfileDetails);
 router.put("/profilechangepwd", userProfileChangePwd);
 router.post("/continuesignup", userContinueSignup);
+router.put("/updatecontinuesignup", updateUserContinueSignup);
 module.exports = router;
