@@ -9,13 +9,8 @@ router.get(
 
 router.get(
   "/auth/facebook/callback",
-  passport.authenticate("facebook", { failureRedirect: "/login" }),
-  function (req, res) {
-    req.session.user = req.user;
-    req.user.graduationYear === undefined && req.user.program === undefined
-      ? res.redirect("/continuesignup")
-      : res.redirect("/");
-  }
+  passport.authenticate("facebook", { failureRedirect: "/auth/login/failed" }),
+  googleAuthentication
 );
 
 router.get(

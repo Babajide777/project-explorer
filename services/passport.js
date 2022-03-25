@@ -13,7 +13,7 @@ passport.use(
     {
       clientID: FACEBOOK_APP_ID,
       clientSecret: FACEBOOK_APP_SECRET,
-      callbackURL: `${getUrl()}facebook/callback`,
+      callbackURL: `${getUrl()}auth/facebook/callback`,
       profileFields: ["email", "id", "first_name", "last_name"],
     },
     function (accessToken, refreshToken, profile, done) {
@@ -22,22 +22,22 @@ passport.use(
         getByEmail(email)
           .then((person) => {
             if (person) {
-              return done(null, person);
+              let signedPerson = signJwt(person._id);
+              return done(null, signedPerson);
             } else {
-              let newUser = new User();
-              newUser.firstname = first_name;
-              newUser.lastname = last_name;
-              newUser.email = email;
-              newUser.matricNumber = id;
-              newUser.setPassword(id);
-              newUser
-                .save()
+              createUser({
+                firstName: first_name,
+                lastName: last_name,
+                email: email,
+                password: sub,
+                matricNumber: sub,
+              })
                 .then((res) => {
-                  done(null, res);
+                  if (res[0]) {
+                    done(null, res[1]);
+                  }
                 })
-                .catch((err) => {
-                  throw err;
-                });
+                .catch((err) => done(err));
             }
           })
           .catch((err) => done(err));
@@ -45,16 +45,6 @@ passport.use(
     }
   )
 );
-
-passport.serializeUser(function (person, done) {
-  done(null, person);
-});
-
-passport.deserializeUser(function (id, done) {
-  User.findById(id, function (err, user) {
-    done(err, user);
-  });
-});
 
 // Google Authentication
 passport.use(
@@ -91,3 +81,13 @@ passport.use(
     }
   )
 );
+
+passport.serializeUser(function (person, done) {
+  done(null, person);
+});
+
+passport.deserializeUser(function (id, done) {
+  User.findById(id, function (err, user) {
+    done(err, user);
+  });
+});
