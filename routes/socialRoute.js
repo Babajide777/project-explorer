@@ -1,8 +1,6 @@
 const router = require("express").Router();
 const passport = require("passport");
 const { googleAuthentication } = require("../controllers/socialController");
-const CLIENT_URL = "http://localhost:3000/";
-const { responseHandler } = require("../utils/responseHandler");
 
 router.get(
   "/auth/facebook",
@@ -36,7 +34,7 @@ router.get(
 );
 
 router.get("/auth/login/failed", (req, res) => {
-  return responseHandler(res, "Login Unsuccessfully", 401, false, "");
+  return res.redirect(`http://localhost:3000/failedlogin`);
 });
 
 module.exports = router;

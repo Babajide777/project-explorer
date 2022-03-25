@@ -1,6 +1,6 @@
 const User = require("../models/userModel");
 const passport = require("passport");
-const { getByEmail, getUrl, createUser } = require("./userService");
+const { getByEmail, getUrl, createUser, signJwt } = require("./userService");
 const facebookStrategy = require("passport-facebook").Strategy;
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const FACEBOOK_APP_SECRET = process.env.FACEBOOK_APP_SECRET;
@@ -65,11 +65,12 @@ passport.use(
       callbackURL: `${getUrl()}auth/google/callback`,
     },
     async function (accessToken, refreshToken, profile, done) {
-      const { sub, name, given_name, family_name, email } = profile._json;
+      const { sub, given_name, family_name, email } = profile._json;
       getByEmail(email)
         .then((person) => {
           if (person) {
-            return done(null, person);
+            let signedPerson = signJwt(person._id);
+            return done(null, signedPerson);
           } else {
             createUser({
               firstName: given_name,
@@ -90,13 +91,3 @@ passport.use(
     }
   )
 );
-
-// passport.serializeUser(function (person, done) {
-//   done(null, person);
-// });
-
-// passport.deserializeUser(function (id, done) {
-//   User.findById(id, function (err, user) {
-//     done(err, user);
-//   });
-// });
