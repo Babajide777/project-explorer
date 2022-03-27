@@ -10,11 +10,11 @@ const userSchema = new Schema(
     program: String,
     matricNumber: { type: String, required: true },
     graduationYear: Number,
-    // profilePicture: {
-    //   type: String,
-    //   default:
-    //     "https://res.cloudinary.com/dz5royvfu/image/upload/c_scale,h_50,q_auto:best,w_50/v1621980671/Explorer/vwydtja2jkmzfvfcd6s2.png",
-    // },
+    profilePicture: {
+      type: String,
+      default:
+        "https://res.cloudinary.com/dz5royvfu/image/upload/c_scale,h_50,q_auto:best,w_50/v1621980671/Explorer/vwydtja2jkmzfvfcd6s2.png",
+    },
   },
   { timestamps: true }
 );

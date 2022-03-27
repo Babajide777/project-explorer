@@ -84,6 +84,9 @@ const scaledPicture = (pic) => {
   return pic.replace("/upload", "/upload/c_scale,h_50,q_auto:best,w_50");
 };
 
+const findUrlAndUpdate = async (profilePicture, id) =>
+  await User.findByIdAndUpdate(id, { profilePicture }, { new: true });
+
 module.exports = {
   createUser,
   getByEmail,
@@ -96,4 +99,5 @@ module.exports = {
   getUrl,
   getUserByIDandUpdateField,
   scaledPicture,
+  findUrlAndUpdate,
 };

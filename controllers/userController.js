@@ -8,6 +8,7 @@ const {
   getUserByIDandUpdatePassword,
   checkJwt,
   getUserByIDandUpdateField,
+  scaledPicture,
 } = require("../services/userService");
 const {
   userRegisterValidation,
@@ -234,6 +235,10 @@ const userProfileUpdate = async (req, res) => {
   };
   const updatedUser = await getUserByIDandUpdateField(id, field);
   let updatedProfilePic;
+
+  if (req.file !== undefined) {
+    const profilePicture = scaledPicture(req.file.path);
+  }
 
   console.log(req.file);
 };
