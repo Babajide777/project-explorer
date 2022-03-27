@@ -79,13 +79,10 @@ const getUrl = () => {
 
 const getUserByIDandUpdateField = async (id, field) =>
   await User.findByIdAndUpdate(id, field, { new: true });
-// if (user) {
-//     user.profilePicture = scaledPicture(user.profilePicture);
-//   }
 
-// const scaledPicture = (pic) => {
-//   return pic.replace("/upload", "/upload/c_scale,h_50,q_auto:best,w_50");
-// };
+const scaledPicture = (pic) => {
+  return pic.replace("/upload", "/upload/c_scale,h_50,q_auto:best,w_50");
+};
 
 module.exports = {
   createUser,
@@ -98,4 +95,5 @@ module.exports = {
   getUserByIDandUpdatePassword,
   getUrl,
   getUserByIDandUpdateField,
+  scaledPicture,
 };

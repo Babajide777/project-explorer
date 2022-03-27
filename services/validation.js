@@ -124,6 +124,7 @@ const updateUserContinueSignupValidation = async (field) => {
 //User edit profile validation rules
 const userEditProfileValidation = async (field) => {
   const schema = Joi.object({
+    id: Joi.string().required().min(24),
     firstName: Joi.string().alphanum().required(),
     lastName: Joi.string().alphanum().required(),
     email: Joi.string().email().required(),

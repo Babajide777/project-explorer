@@ -16,6 +16,7 @@ const {
   userResetPasswordValidation,
   profileChangePasswordValidation,
   updateUserContinueSignupValidation,
+  userEditProfileValidation,
 } = require("../services/validation");
 const { responseHandler } = require("../utils/responseHandler");
 const { createMail } = require("../services/sendMail");
@@ -208,7 +209,32 @@ const updateUserContinueSignup = async (req, res) => {
 };
 
 const userProfileUpdate = async (req, res) => {
-  console.log(req.body);
+  const { details } = await userEditProfileValidation(req.body);
+  if (details) {
+    let allErrors = details.map((detail) => detail.message.replace(/"/g, ""));
+    return responseHandler(res, allErrors, 400, false, "");
+  }
+  const {
+    firstName,
+    lastName,
+    email,
+    program,
+    matricNumber,
+    graduationYear,
+    id,
+  } = req.body;
+
+  let field = {
+    firstName,
+    lastName,
+    email,
+    program,
+    matricNumber,
+    graduationYear,
+  };
+  const updatedUser = await getUserByIDandUpdateField(id, field);
+  let updatedProfilePic;
+
   console.log(req.file);
 };
 
