@@ -9,6 +9,7 @@ const {
   checkJwt,
   getUserByIDandUpdateField,
   scaledPicture,
+  findUrlAndUpdate,
 } = require("../services/userService");
 const {
   userRegisterValidation,
@@ -238,9 +239,28 @@ const userProfileUpdate = async (req, res) => {
 
   if (req.file !== undefined) {
     const profilePicture = scaledPicture(req.file.path);
+    updatedProfilePic = await findUrlAndUpdate(profilePicture, id);
   }
 
-  console.log(req.file);
+  return updatedUser && updatedProfilePic
+    ? responseHandler(
+        res,
+        "name and picture updated",
+        200,
+        true,
+        updatedProfilePic
+      )
+    : updatedUser
+    ? responseHandler(res, "name updated", 200, true, updatedUser)
+    : updatedProfilePic
+    ? responseHandler(res, "picture updated", 200, true, updatedProfilePic)
+    : responseHandler(
+        res,
+        "Error updating name and/or picture",
+        400,
+        false,
+        ""
+      );
 };
 
 module.exports = {
