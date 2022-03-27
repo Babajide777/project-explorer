@@ -207,7 +207,10 @@ const updateUserContinueSignup = async (req, res) => {
   return responseHandler(res, ["Unable to complete signup"], 404, false, "");
 };
 
-const userProfileUpdate = async (req, res) => {};
+const userProfileUpdate = async (req, res) => {
+  console.log(req.body);
+  console.log(req.file);
+};
 
 module.exports = {
   userLogin,

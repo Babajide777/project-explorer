@@ -121,6 +121,32 @@ const updateUserContinueSignupValidation = async (field) => {
   }
 };
 
+//User edit profile validation rules
+const userEditProfileValidation = async (field) => {
+  const schema = Joi.object({
+    firstName: Joi.string().alphanum().required(),
+    lastName: Joi.string().alphanum().required(),
+    email: Joi.string().email().required(),
+    program: Joi.string()
+      .valid(
+        "Computer Science",
+        "Computer Information Systems",
+        "Computer technology"
+      )
+      .required(),
+    matricNumber: Joi.string().alphanum().required(),
+    graduationYear: Joi.number()
+      .valid(2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022)
+      .required(),
+  });
+
+  try {
+    return await schema.validateAsync(field, { abortEarly: false });
+  } catch (err) {
+    return err;
+  }
+};
+
 module.exports = {
   userRegisterValidation,
   userLoginValidation,
@@ -129,4 +155,5 @@ module.exports = {
   createProjectValidation,
   profileChangePasswordValidation,
   updateUserContinueSignupValidation,
+  userEditProfileValidation,
 };

@@ -10,6 +10,9 @@ const {
   updateUserContinueSignup,
   userProfileUpdate,
 } = require("../controllers/userController");
+const multer = require("multer");
+const { storage } = require("../services/cloudinary");
+const upload = multer({ storage });
 
 router.post("/login", userLogin);
 router.post("/signup", userSignup);
@@ -19,5 +22,9 @@ router.get("/profiledetails/:id", userProfileDetails);
 router.put("/profilechangepwd", userProfileChangePwd);
 router.post("/continuesignup", userContinueSignup);
 router.put("/updatecontinuesignup", updateUserContinueSignup);
-router.put("/profileupdate", userProfileUpdate);
+router.put(
+  "/profileupdate",
+  upload.single("profilePicture"),
+  userProfileUpdate
+);
 module.exports = router;
