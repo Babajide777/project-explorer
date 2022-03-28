@@ -18,6 +18,10 @@ app.use(express.static("public"));
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.get("/", (req, res) => {
+  res.send("Babajide Oyafemi's Project Explorer API");
+});
+
 app.use("/home", require("./routes/homeRoute"));
 app.use("/user", require("./routes/userRoute"));
 app.use("/project", require("./routes/projectRoute"));

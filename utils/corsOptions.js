@@ -1,5 +1,8 @@
 const corsOptions = {
-  origin: ["http://localhost:3000"],
+  origin: [
+    "http://localhost:3000",
+    "https://babajide-project-explorer.netlify.app/",
+  ],
   methods: ["GET", "POST", "PUT"],
   preflightContinue: true,
   credentials: true,
