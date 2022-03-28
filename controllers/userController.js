@@ -245,18 +245,18 @@ const userProfileUpdate = async (req, res) => {
   return updatedUser && updatedProfilePic
     ? responseHandler(
         res,
-        "name and picture updated",
+        ["name and picture updated"],
         200,
         true,
         updatedProfilePic
       )
     : updatedUser
-    ? responseHandler(res, "name updated", 200, true, updatedUser)
+    ? responseHandler(res, ["name updated"], 200, true, updatedUser)
     : updatedProfilePic
-    ? responseHandler(res, "picture updated", 200, true, updatedProfilePic)
+    ? responseHandler(res, ["picture updated"], 200, true, updatedProfilePic)
     : responseHandler(
         res,
-        "Error updating name and/or picture",
+        ["Error updating name and/or picture"],
         400,
         false,
         ""

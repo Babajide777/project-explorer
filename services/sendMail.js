@@ -1,5 +1,5 @@
 const nodemailer = require("nodemailer");
-const { getUrl } = require("../services/user");
+const { getUrl } = require("./userService");
 const { google } = require("googleapis");
 
 const NODEMAILER_EMAIL = process.env.NODEMAILER_EMAIL;

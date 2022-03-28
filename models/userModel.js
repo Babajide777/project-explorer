@@ -19,12 +19,5 @@ const userSchema = new Schema(
   { timestamps: true }
 );
 
-// UserSchema.virtual("thumbnail").get(function () {
-//   return this.profilePicture.replace(
-//     "/upload",
-//     "/upload/c_scale,q_auto:best,w_50"
-//   );
-// });
-
 const User = mongoose.model("User", userSchema);
 module.exports = User;

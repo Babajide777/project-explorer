@@ -1,8 +1,8 @@
 {
 	"name": "app",
 	"version": "1.0.0",
-	"description": "",
-	"keywords": [],
+	"description": "Babajide Oyafemi's Project Explorer API", 
+	"keywords": ["api", "project", "explorer"],
 	"author": "",
 	"scripts": {
 		"dev": "nodemon server.js",
@@ -15,17 +15,12 @@
 		"bcryptjs": "^2.4.3",
 		"bootstrap": "^4.6.0",
 		"cloudinary": "^1.25.1",
-		"connect-mongo": "^4.5.0",
 		"cors": "^2.8.5",
 		"dotenv": "^8.2.0",
 		"express": "^4.17.1",
-		"express-flash": "0.0.2",
-		"express-session": "^1.17.1",
-		"googleapis": "^74.2.0",
+		"googleapis": "^99.0.0",
 		"joi": "^17.6.0",
 		"jsonwebtoken": "^8.5.1",
-		"method-override": "^3.0.0",
-		"mongodb": "^3.6.6",
 		"mongoose": "^5.12.4",
 		"morgan": "^1.10.0",
 		"multer": "^1.4.2",
@@ -34,10 +29,8 @@
 		"passport": "^0.4.1",
 		"passport-facebook": "^3.0.0",
 		"passport-google-oauth20": "^2.0.0",
-		"react": "^17.0.2",
 		"react-bootstrap": "^1.5.2",
-		"react-bootstrap-icons": "^1.4.1",
-		"react-dom": "^17.0.2"
+		"react-bootstrap-icons": "^1.4.1"
 	},
 	"devDependencies": {
 		"cross-env": "^7.0.2",
