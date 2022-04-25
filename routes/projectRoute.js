@@ -4,6 +4,7 @@ const {
   getProject,
 } = require("../controllers/projectController");
 
+//project routes
 router.post("/create", createProject);
 router.post("/getProject", getProject);
 

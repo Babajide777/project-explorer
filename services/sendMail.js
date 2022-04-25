@@ -15,6 +15,7 @@ const oAuth2Client = new google.auth.OAuth2(
 );
 oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
 
+//Create a mail
 const createMail = async (email, id) => {
   const accessToken = await oAuth2Client.getAccessToken();
 

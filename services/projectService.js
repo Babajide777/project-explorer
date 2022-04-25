@@ -1,6 +1,7 @@
 const Project = require("../models/projectModel");
 const { translateError } = require("./mongo_helper");
 
+//create new project
 const createNewProject = async ({
   name,
   abstract,

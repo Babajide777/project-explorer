@@ -6,7 +6,10 @@ const jwt = require("jsonwebtoken");
 
 //To hash pasword
 const hashedPassword = async (password) => {
+  //generate salt
   const salt = await bcrypt.genSalt(15);
+
+  //hash password
   return await bcrypt.hash(password, salt);
 };
 
@@ -44,6 +47,7 @@ const getByEmail = async (email) => await User.findOne({ email });
 
 // create and sign json web token for a user
 const signJwt = (id) => {
+  //sign user token
   const token = jwt.sign({ id }, TOKEN_SECRET, {
     expiresIn: 60 * 60 * 24 * 30,
   });
@@ -65,8 +69,10 @@ const checkJwt = async (jwtID) => {
   }
 };
 
+//Return user with specified ID
 const getUserByID = async (id) => await User.findById(id);
 
+//Update a user's password given the id
 const getUserByIDandUpdatePassword = async (id, password) =>
   await User.findByIdAndUpdate(id, { password }, { new: true });
 
@@ -77,13 +83,15 @@ const getUrl = () => {
     : "http://localhost:4000/";
 };
 
+//Update specified fields in user info given the id
 const getUserByIDandUpdateField = async (id, field) =>
   await User.findByIdAndUpdate(id, field, { new: true });
 
-const scaledPicture = (pic) => {
-  return pic.replace("/upload", "/upload/c_scale,h_50,q_auto:best,w_50");
-};
+//Resized picture
+const scaledPicture = (pic) =>
+  pic.replace("/upload", "/upload/c_scale,h_50,q_auto:best,w_50");
 
+// Update profile picture url
 const findUrlAndUpdate = async (profilePicture, id) =>
   await User.findByIdAndUpdate(id, { profilePicture }, { new: true });
 
