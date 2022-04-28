@@ -29,9 +29,12 @@ const getAll = async () => await Project.find();
 const getLastFourProjects = async () =>
   await Project.find().sort({ createdAt: -1 }).limit(4);
 
+const getProjectsUsingSearch = async (searchterm, searchtype, page) => {};
+
 module.exports = {
   getAll,
   createNewProject,
   getProjectById,
   getLastFourProjects,
+  getProjectsUsingSearch,
 };

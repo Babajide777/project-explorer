@@ -1,6 +1,7 @@
 const {
   createNewProject,
   getProjectById,
+  getProjectsUsingSearch,
 } = require("../services/projectService");
 const { createProjectValidation } = require("../services/validation");
 const { responseHandler } = require("../utils/responseHandler");
@@ -44,7 +45,20 @@ const getProject = async (req, res) => {
     : responseHandler(res, ["Project not found"], 400, false, "");
 };
 
+const projectSearch = async (req, res) => {
+  console.log(req.query);
+  const { searchterm, searchtype, page } = req.query;
+
+  const currentPage = page || 1;
+
+  const searchResult = await getProjectsUsingSearch(
+    searchterm,
+    searchtype,
+    currentPage
+  );
+};
 module.exports = {
   createProject,
   getProject,
+  projectSearch,
 };
