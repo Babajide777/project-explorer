@@ -29,7 +29,54 @@ const getAll = async () => await Project.find();
 const getLastFourProjects = async () =>
   await Project.find().sort({ createdAt: -1 }).limit(4);
 
-const getProjectsUsingSearch = async (searchterm, searchtype, page) => {};
+const getProjectsUsingSearch = async (searchterm, searchtype, page) => {
+  try {
+    if (searchterm && searchtype) {
+      let query;
+      switch (searchtype) {
+        case "name":
+          query = { name: { $regex: `${searchterm}`, $options: "i" } };
+          break;
+        case "abstract":
+          query = { abstract: { $regex: `${searchterm}`, $options: "i" } };
+          break;
+        case "authors":
+          query = { authors: { $regex: `${searchterm}`, $options: "i" } };
+          break;
+        case "tags":
+          query = { tags: { $regex: `${searchterm}`, $options: "i" } };
+          break;
+      }
+
+      let pageLimit = 8;
+      let offSetValue = (page - 1) * pageLimit;
+
+      const returnedSearchResult = await Project.find(query)
+        .skip(offSetValue)
+        .limit(pageLimit);
+
+      const totalSearchCount = await Project.find(query).countDocuments();
+
+      const searchPages = Math.ceil(totalSearchCount / pageLimit);
+
+      const field = {
+        returnedSearchResult,
+        totalSearchCount,
+        searchPages,
+      };
+
+      if (totalSearchCount <= 0) {
+        return [false, "There's no project matching your search query"];
+      } else {
+        return [true, field];
+      }
+    } else {
+      throw [false, "query incomplete"];
+    }
+  } catch (error) {
+    return [false, translateError(error)];
+  }
+};
 
 module.exports = {
   getAll,

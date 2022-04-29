@@ -46,7 +46,6 @@ const getProject = async (req, res) => {
 };
 
 const projectSearch = async (req, res) => {
-  console.log(req.query);
   const { searchterm, searchtype, page } = req.query;
 
   const currentPage = page || 1;
