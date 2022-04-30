@@ -9,6 +9,7 @@ const ProjectSchema = new Schema(
     authors: { type: [String], required: true },
     tags: { type: [String], required: true },
     createdBy: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    lastVited: Date,
   },
   { timestamps: true }
 );

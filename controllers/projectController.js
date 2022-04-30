@@ -2,6 +2,7 @@ const {
   createNewProject,
   getProjectById,
   getProjectsUsingSearch,
+  updateProjectLastVisted,
 } = require("../services/projectService");
 const { createProjectValidation } = require("../services/validation");
 const { responseHandler } = require("../utils/responseHandler");
@@ -67,8 +68,12 @@ const projectSearch = async (req, res) => {
   }
   return responseHandler(res, searchResult[1], 400, searchResult[0], "");
 };
+
+const projectUpdateLastVisit = async (req, res) => {};
+
 module.exports = {
   createProject,
   getProject,
   projectSearch,
+  projectUpdateLastVisit,
 };
