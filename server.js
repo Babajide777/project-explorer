@@ -10,6 +10,7 @@ require("./services/passport");
 const SERVER_PORT = process.env.SERVER_PORT;
 const corsOptions = require("./utils/corsOptions");
 
+//Middlewares
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -18,18 +19,20 @@ app.use(express.static("public"));
 app.use(passport.initialize());
 app.use(passport.session());
 
+//routes
 app.get("/", (req, res) => {
   res.send("Babajide Oyafemi's Project Explorer API");
 });
-
 app.use("/home", require("./routes/homeRoute"));
 app.use("/user", require("./routes/userRoute"));
 app.use("/project", require("./routes/projectRoute"));
 app.use("/", require("./routes/socialRoute"));
 
+//mongoose extra setting
 mongoose.set("bufferCommands", false);
 mongoose.set("useFindAndModify", false);
 
+//MongoBD connection
 mongoose.connect(
   process.env.MONGODB_URI,
   { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true },
@@ -42,6 +45,7 @@ mongoose.connect(
   }
 );
 
+//Server listening on port
 app.listen(process.env.PORT || SERVER_PORT, () =>
   console.log("Server listening on port ")
 );

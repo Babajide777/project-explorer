@@ -8,6 +8,7 @@ const FACEBOOK_APP_ID = process.env.FACEBOOK_APP_ID;
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 
+//Facebook Authentication
 passport.use(
   new facebookStrategy(
     {
@@ -82,10 +83,12 @@ passport.use(
   )
 );
 
+//serialize the user
 passport.serializeUser(function (person, done) {
   done(null, person);
 });
 
+//deserialize user
 passport.deserializeUser(function (id, done) {
   User.findById(id, function (err, user) {
     done(err, user);

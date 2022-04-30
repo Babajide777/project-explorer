@@ -2,6 +2,7 @@ const router = require("express").Router();
 const passport = require("passport");
 const { googleAuthentication } = require("../controllers/socialController");
 
+//social routes
 router.get(
   "/auth/facebook",
   passport.authenticate("facebook", { scope: "email" })
@@ -28,6 +29,7 @@ router.get(
   googleAuthentication
 );
 
+//route for unsuceesful social media login attempt
 router.get("/auth/login/failed", (req, res) => {
   return res.redirect(`http://localhost:3000/failedlogin`);
 });
