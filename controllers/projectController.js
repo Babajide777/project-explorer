@@ -69,7 +69,19 @@ const projectSearch = async (req, res) => {
   return responseHandler(res, searchResult[1], 400, searchResult[0], "");
 };
 
-const projectUpdateLastVisit = async (req, res) => {};
+const projectUpdateLastVisit = async (req, res) => {
+  const { id } = req.body;
+
+  (await updateProjectLastVisted(id, Date.now()))
+    ? responseHandler(res, ["Project last visited updated"], 200, true, "")
+    : responseHandler(
+        res,
+        ["Project last visited could not be updated"],
+        400,
+        false,
+        ""
+      );
+};
 
 module.exports = {
   createProject,
