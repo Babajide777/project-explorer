@@ -81,6 +81,9 @@ const getProjectsUsingSearch = async (searchterm, searchtype, page) => {
   }
 };
 
+const updateProjectLastVisted = async (id, lastVited) =>
+  await Project.findByIdAndUpdate(id, { lastVited }, { new: true });
+
 module.exports = {
   getAll,
   createNewProject,
