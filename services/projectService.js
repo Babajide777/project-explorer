@@ -63,6 +63,9 @@ const getProjectsUsingSearch = async (searchterm, searchtype, page) => {
         returnedSearchResult,
         totalSearchCount,
         searchPages,
+        currentPage: page,
+        searchterm,
+        searchtype,
       };
 
       if (totalSearchCount <= 0) {

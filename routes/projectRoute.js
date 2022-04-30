@@ -8,6 +8,6 @@ const {
 //project routes
 router.post("/create", createProject);
 router.post("/getProject", getProject);
-router.get("*/search", projectSearch);
+router.get("/search/*", projectSearch);
 
 module.exports = router;

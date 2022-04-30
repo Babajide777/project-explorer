@@ -55,6 +55,17 @@ const projectSearch = async (req, res) => {
     searchtype,
     currentPage
   );
+
+  if (searchResult[0]) {
+    return responseHandler(
+      res,
+      "returned searched results",
+      200,
+      searchResult[0],
+      searchResult[1]
+    );
+  }
+  return responseHandler(res, searchResult[1], 400, searchResult[0], "");
 };
 module.exports = {
   createProject,
