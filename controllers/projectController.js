@@ -46,17 +46,20 @@ const getProject = async (req, res) => {
     : responseHandler(res, ["Project not found"], 400, false, "");
 };
 
+//controller for project search
 const projectSearch = async (req, res) => {
   const { searchterm, searchtype, page } = req.query;
 
   const currentPage = page || 1;
 
+  // get projects depending on search
   const searchResult = await getProjectsUsingSearch(
     searchterm,
     searchtype,
     currentPage
   );
 
+  //check if search was successful
   if (searchResult[0]) {
     return responseHandler(
       res,
@@ -69,9 +72,12 @@ const projectSearch = async (req, res) => {
   return responseHandler(res, searchResult[1], 400, searchResult[0], "");
 };
 
+// controller to update project last visited
 const projectUpdateLastVisit = async (req, res) => {
+  //id of the project
   const { id } = req.body;
 
+  // update project last visited
   (await updateProjectLastVisted(id, Date.now()))
     ? responseHandler(res, ["Project last visited updated"], 200, true, "")
     : responseHandler(

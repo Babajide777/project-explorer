@@ -29,10 +29,14 @@ const getAll = async () => await Project.find();
 const getLastFourProjects = async () =>
   await Project.find().sort({ createdAt: -1 }).limit(4);
 
+// search for projects with a term in it
 const getProjectsUsingSearch = async (searchterm, searchtype, page) => {
   try {
+    // check if searchterm and type are sent
     if (searchterm && searchtype) {
       let query;
+
+      // set query expression
       switch (searchtype) {
         case "name":
           query = { name: { $regex: `${searchterm}`, $options: "i" } };
@@ -48,17 +52,24 @@ const getProjectsUsingSearch = async (searchterm, searchtype, page) => {
           break;
       }
 
+      // number of project to be returned
       let pageLimit = 8;
+
+      // search offset
       let offSetValue = (page - 1) * pageLimit;
 
+      // returned search result
       const returnedSearchResult = await Project.find(query)
         .skip(offSetValue)
         .limit(pageLimit);
 
+      // seach count
       const totalSearchCount = await Project.find(query).countDocuments();
 
+      // number of pages returned
       const searchPages = Math.ceil(totalSearchCount / pageLimit);
 
+      // set fields to return
       const field = {
         returnedSearchResult,
         totalSearchCount,
@@ -68,6 +79,7 @@ const getProjectsUsingSearch = async (searchterm, searchtype, page) => {
         searchtype,
       };
 
+      // check if any search result is returned
       if (totalSearchCount <= 0) {
         return [false, "There's no project matching your search query"];
       } else {
@@ -81,6 +93,7 @@ const getProjectsUsingSearch = async (searchterm, searchtype, page) => {
   }
 };
 
+// update last visited date
 const updateProjectLastVisted = async (id, lastVited) =>
   await Project.findByIdAndUpdate(id, { lastVited }, { new: true });
 
